@@ -1,0 +1,40 @@
+{
+    "Images": [
+        {
+            "Architecture": "x86_64",
+            "CreationDate": "2023-11-08T11:58:15.000Z",
+            "ImageId": "ami-0badf22cd365b6af1",
+            "ImageLocation": "amazon/Deep Learning AMI (Amazon Linux 2) Version 74.5",
+            "ImageType": "machine",
+            "Public": true,
+            "OwnerId": "898082745236",
+            "PlatformDetails": "Linux/UNIX",
+            "UsageOperation": "RunInstances",
+            "State": "available",
+            "BlockDeviceMappings": [
+                {
+                    "DeviceName": "/dev/xvda",
+                    "Ebs": {
+                        "DeleteOnTermination": true,
+                        "Iops": 3000,
+                        "SnapshotId": "snap-094c2bf95752266e9",
+                        "VolumeSize": 105,
+                        "VolumeType": "gp3",
+                        "Throughput": 125,
+                        "Encrypted": false
+                    }
+                }
+            ],
+            "Description": "Supported EC2 instances: G3*, P3*, P4*, G5*, G4dn*, Inf1*. PyTorch-2.0, TensorFlow-2.13, Neuron. Release notes: https://docs.aws.amazon.com/dlami/latest/devguide/appendix-ami-release-notes.html",
+            "EnaSupport": true,
+            "Hypervisor": "xen",
+            "ImageOwnerAlias": "amazon",
+            "Name": "Deep Learning AMI (Amazon Linux 2) Version 74.5",
+            "RootDeviceName": "/dev/xvda",
+            "RootDeviceType": "ebs",
+            "SriovNetSupport": "simple",
+            "VirtualizationType": "hvm",
+            "DeprecationTime": "2025-11-08T11:58:15.000Z"
+        }
+    ]
+}
