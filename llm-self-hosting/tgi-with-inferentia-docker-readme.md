@@ -32,8 +32,9 @@ neuron-ls
 | 0      | 2      | 32 GB  | 00:1f.0 |
 +--------+--------+--------+---------+
 ```
-6. Follow https://github.com/huggingface/optimum-neuron/tree/main/text-generation-inference to deploy the neuron model. Look at https://huggingface.co/aws-neuron for exported models for neuron. Find the model which is exported for 2 cores. 
-8. Following works for Mistral-7B model. 
+### Deploy Mistral-7B model
+1. Follow https://github.com/huggingface/optimum-neuron/tree/main/text-generation-inference to deploy the neuron model. Look at https://huggingface.co/aws-neuron for exported models for neuron. Find the model which is exported for 2 cores. 
+2. Following works for Mistral-7B model. 
 ```shell
 export HF_TOKEN=<HF_TOKEN>
 docker run -p 8080:80    \
@@ -56,8 +57,9 @@ curl 127.0.0.1:8080/generate    \
 {"generated_text":"\nLaw is a very vast subject and it is not possible to learn all the aspects of law"}
 
 ```
-
-9. Following works for Llama2.
+### Deploy Mistral-7B model
+1. Follow https://github.com/huggingface/optimum-neuron/tree/main/text-generation-inference to deploy the neuron model. Look at https://huggingface.co/aws-neuron for exported models for neuron. Find the model which is exported for 2 cores.
+2. Following works for Llama2.
 ```shell
 export HF_TOKEN=<HF_TOKEN>
 docker run -p 8080:80           \
