@@ -1,13 +1,13 @@
 ## Hosting TGI on Inferentia2 using docker
 ### Launch and prepare EC2 instance
 1. Use the command below to find the right image. Refer https://docs.aws.amazon.com/dlami/latest/devguide/launch.html. 
-For sample image refer [sample imge](image.json)
+For the instructions below [sample imge ami-06e474e6305e475ac](image.json) is used. 
 ```
 aws ec2 describe-images --region ap-south-1 --owners amazon \
 --filters 'Name=name,Values=Deep Learning AMI (Amazon Linux 2) Version ??.?' 'Name=state,Values=available' \
 --query 'reverse(sort_by(Images, &CreationDate))[:1].ImageId' --output text
 ```
-2. For the LLM launching with < 200 GB may not suffice. 
+2. Launch with 512 GB storage. 
 3. Create the EC2 instance. For this doc , I created inf2.xlarge which just one Inferentia2 chip and 2 core. Refer https://aws.amazon.com/ec2/instance-types/inf2/ 
 4. SSH to the instance and execute the command below. Refer https://awsdocs-neuron.readthedocs-hosted.com/en/latest/general/devflows/inference/ec2-then-ec2-devflow-inf2.html
 ```shell
