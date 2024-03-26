@@ -57,7 +57,7 @@ curl 127.0.0.1:8080/generate    \
 {"generated_text":"\nLaw is a very vast subject and it is not possible to learn all the aspects of law"}
 
 ```
-### Deploy Mistral-7B model
+### Deploy Llama-7B model
 1. Follow https://github.com/huggingface/optimum-neuron/tree/main/text-generation-inference to deploy the neuron model. Look at https://huggingface.co/aws-neuron for exported models for neuron. Find the model which is exported for 2 cores.
 2. Following works for Llama2.
 ```shell
@@ -77,6 +77,34 @@ To test the model run -
 curl 127.0.0.1:8080/generate   \
   -X POST   \
   -d '{"inputs":"What is LLM ?","parameters":{"max_new_tokens":20}}'   \
+  -H 'Content-Type: application/json'
+
+{"generated_text":"\n\nLLM stands for Master of Laws, which is a postgraduate academic degree, purs"}
+```
+### Deploy Llama-2-7b-chat-hf model 4096 Sequence Length
+1. Following works for Llama2.
+```shell
+export HF_TOKEN=<HF_TOKEN>
+
+docker run -p 8080:80 \
+       -v $(pwd)/data:/data \
+       --device=/dev/neuron0 \
+       -e HF_TOKEN=${HF_TOKEN} \
+       -e HF_BATCH_SIZE=1 \
+       -e HF_SEQUENCE_LENGTH=4096 \
+       -e HF_AUTO_CAST_TYPE="fp16" \
+       -e HF_NUM_CORES=2 \
+       ghcr.io/huggingface/neuronx-tgi:latest \
+       --model-id meta-llama/Llama-2-7b-chat-hf \
+       --max-batch-size 1 \
+       --max-input-length 4000 \
+       --max-total-tokens 4096  
+```
+To test the model run -
+```shell
+curl 127.0.0.1:8080/generate   \
+  -X POST   \
+  -d '{"inputs":"What is LLM ?","parameters":{"max_new_tokens":4000}}'   \
   -H 'Content-Type: application/json'
 
 {"generated_text":"\n\nLLM stands for Master of Laws, which is a postgraduate academic degree, purs"}
