@@ -1,7 +1,7 @@
 ## Hosting TGI on Inferentia2 using docker
 ### Launch and prepare EC2 instance
 1. Use the command below to find the right image. Refer https://docs.aws.amazon.com/dlami/latest/devguide/launch.html. 
-For the instructions below [sample imge ami-06e474e6305e475ac](image.json) is used. 
+For the instructions below [sample imge ami-06e474e6305e475ac](inf2-image.json) is used. 
 ```
 aws ec2 describe-images --region ap-south-1 --owners amazon \
 --filters 'Name=name,Values=Deep Learning AMI (Amazon Linux 2) Version ??.?' 'Name=state,Values=available' \
@@ -100,6 +100,44 @@ docker run -p 8080:80 \
        --max-input-length 4000 \
        --max-total-tokens 4096  
 ```
+```shell
+docker run -p 8080:80 \
+    -v $(pwd)/data:/data  \
+    --device=/dev/neuron0 \
+    -e HF_TOKEN=${HF_TOKEN} \
+    -e HF_BATCH_SIZE=1  \
+    -e HF_SEQUENCE_LENGTH=4096  \
+    -e HF_AUTO_CAST_TYPE="fp16" \
+    -e HF_NUM_CORES=2 \
+    ghcr.io/huggingface/neuronx-tgi:latest   \
+    --model-id meta-llama/Llama-2-7b-chat-hf \
+    --max-input-length 4000   \
+    --max-total-tokens 4096   \
+    --waiting-served-ratio 1.2 \
+    --max-batch-prefill-tokens 4000  \
+    --max-batch-total-tokens=4096    \
+    --max-batch-size 1
+```
+
+```shell
+docker run -p 8080:80 \
+       -v $(pwd)/data:/data \
+       --device=/dev/neuron0 \
+       -e HF_TOKEN=${HF_TOKEN} \
+       -e HF_BATCH_SIZE=4 \
+       -e HF_SEQUENCE_LENGTH=4096 \
+       -e HF_AUTO_CAST_TYPE="fp16" \
+       -e HF_NUM_CORES=2 \
+       ghcr.io/huggingface/neuronx-tgi:latest \
+       --model-id meta-llama/Llama-2-7b-chat-hf \
+       --max-input-length 4000 \
+       --max-total-tokens 4096 \
+       --waiting-served-ratio 1.2 \
+       --max-batch-prefill-tokens 16000 \
+       --max-batch-total-tokens 16000 \
+       --max-batch-size 4 
+```
+
 To test the model run -
 ```shell
 curl 127.0.0.1:8080/generate   \
@@ -108,4 +146,6 @@ curl 127.0.0.1:8080/generate   \
   -H 'Content-Type: application/json'
 
 {"generated_text":"\n\nLLM (Master of Laws) is a postgraduate degree in law. It is typically a one-year program that is designed for students who have already completed a law degree, such as a Juris Doctor (JD) or Bachelor of Laws (LLB). The LLM program provides advanced education in a specific area of law, such as corporate law, intellectual property law, or international law.\n\nThe LLM program typically includes coursework, research, and sometimes, clinical work. Students in an LLM program can expect to take classes from experienced faculty members and engage in discussions and debates with their peers. The program also provides opportunities for students to network with professionals in their chosen area of law.\n\nEarning an LLM degree can provide several benefits, including:\n\n1. Specialized knowledge: An LLM degree allows students to gain advanced knowledge in a specific area of law, which can be helpful for those who want to specialize in a particular area of practice.\n2. Career advancement: An LLM degree can help lawyers advance their careers by providing them with specialized knowledge and skills that can be applied in their practice.\n3. Networking opportunities: LLM programs provide opportunities for students to network with professionals in their chosen area of law, which can be helpful for building a professional network.\n4. Personal fulfillment: Pursuing an LLM degree can be a personally fulfilling experience, as it allows students to delve deeper into a specific area of law and gain a deeper understanding of the subject matter.\n\nIt's worth noting that an LLM degree is not a requirement for practicing law, and it is not a substitute for a JD or LLB degree. It is a supplemental degree that provides additional education and training in a specific area of law.</s>"}
+
 ```
+

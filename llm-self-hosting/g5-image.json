@@ -1,0 +1,36 @@
+{
+  "Architecture": "x86_64",
+  "CreationDate": "2024-03-13T09:26:50.000Z",
+  "ImageId": "ami-0ba8680ae66b50b7d",
+  "ImageLocation": "amazon/Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.0.1 (Amazon Linux 2) 20240312",
+  "ImageType": "machine",
+  "Public": true,
+  "OwnerId": "898082745236",
+  "PlatformDetails": "Linux/UNIX",
+  "UsageOperation": "RunInstances",
+  "State": "available",
+  "BlockDeviceMappings": [
+    {
+      "DeviceName": "/dev/xvda",
+      "Ebs": {
+        "DeleteOnTermination": true,
+        "Iops": 3000,
+        "SnapshotId": "snap-09f789c8aa37b0fc2",
+        "VolumeSize": 45,
+        "VolumeType": "gp3",
+        "Throughput": 125,
+        "Encrypted": false
+      }
+    }
+  ],
+  "Description": "Supported EC2 instances: G5, G4dn, P5, P4d, P4de. Release notes: https://docs.aws.amazon.com/dlami/latest/devguide/appendix-ami-release-notes.html",
+  "EnaSupport": true,
+  "Hypervisor": "xen",
+  "ImageOwnerAlias": "amazon",
+  "Name": "Deep Learning OSS Nvidia Driver AMI GPU PyTorch 2.0.1 (Amazon Linux 2) 20240312",
+  "RootDeviceName": "/dev/xvda",
+  "RootDeviceType": "ebs",
+  "SriovNetSupport": "simple",
+  "VirtualizationType": "hvm",
+  "DeprecationTime": "2026-03-13T09:26:50.000Z"
+}
