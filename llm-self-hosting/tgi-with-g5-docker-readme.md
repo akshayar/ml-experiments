@@ -35,31 +35,7 @@ nvidia-smi
 |    0   N/A  N/A     14463      C   /opt/conda/bin/python3.10                 21256MiB |
 +---------------------------------------------------------------------------------------+
 ```
-### Deploy Mistral-7B model
-1. Follow https://huggingface.co/docs/text-generation-inference/index and https://github.com/huggingface/text-generation-inference .
-2. Following works for Mistral-7B model.
-```shell
-export HF_TOKEN=<HF_TOKEN>
-model=mistralai/Mistral-7B-Instruct-v0.2
-volume=$PWD/data 
 
-docker run --gpus all --shm-size 1g -p 8080:80 \
--v $volume:/data \
--e HF_TOKEN=${HF_TOKEN} \
-ghcr.io/huggingface/text-generation-inference:1.4 \
---model-id $model
-
-```
-Following is the sample input and output to test the model -
-```shell
-curl 127.0.0.1:8080/generate    \
- -X POST    \
- -d '{"inputs":"What is LLM ?","parameters":{"max_new_tokens":20}}'    \
- -H 'Content-Type: application/json'
-
-{"generated_text":"\nLaw is a very vast subject and it is not possible to learn all the aspects of law"}
-
-```
 ### Deploy Llama-7B model
 1. Follow https://huggingface.co/docs/text-generation-inference/index and https://github.com/huggingface/text-generation-inference .
 2. Following works for Llama2.
