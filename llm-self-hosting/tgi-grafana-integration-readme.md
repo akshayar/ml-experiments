@@ -29,10 +29,7 @@ prometheus --config.file=prometheus.yaml &
 docker run -d -p 3000:3000 --name=grafana -e "GF_INSTALL_PLUGINS=grafana-clock-panel" grafana/grafana
 ```
 7. Add Prometheus server created above as data source. 
-8. Import dashboard. 
-```shell
-https://grafana.com/grafana/dashboards/19831-text-generation-inference-dashboard/
-```
+8. Import dashboard https://grafana.com/grafana/dashboards/19831-text-generation-inference-dashboard/. 
 9. Sample dashboard ![TGI Dashboard](./images/Llama-General-2024-04-17.png "dashboard")
 
 ## TGI Monitoring using AWS Managed Prometheus
