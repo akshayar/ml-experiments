@@ -59,3 +59,17 @@ curl 127.0.0.1:8080/generate   \
 
 {"generated_text":"\n\nLLM stands for Master of Laws, which is a postgraduate academic degree, purs"}
 ```
+### Deploy Llama-7B model with multiple shards
+```shell
+## For two shards
+export CUDA_VISIBLE_DEVICES=0,1
+num_gpus=$(echo $CUDA_VISIBLE_DEVICES | tr ',' '\n' | wc -l)
+docker run --gpus all --shm-size 1g -p 8080:80 \
+    -v $volume:/data \
+    -e HF_TOKEN=${HF_TOKEN} $ADD_ENVS\
+    -e CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES \
+    ghcr.io/huggingface/text-generation-inference:1.4 \
+    --model-id $model\
+     --num-shard $num_gpus 
+```
+
