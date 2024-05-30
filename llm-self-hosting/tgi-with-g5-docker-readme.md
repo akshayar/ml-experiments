@@ -62,7 +62,24 @@ curl 127.0.0.1:8080/generate   \
 ### Deploy Llama-7B model with multiple shards
 ```shell
 ## For two shards
+export HF_TOKEN=<HF_TOKEN>
 export CUDA_VISIBLE_DEVICES=0,1
+num_gpus=$(echo $CUDA_VISIBLE_DEVICES | tr ',' '\n' | wc -l)
+docker run --gpus all --shm-size 1g -p 8080:80 \
+    -v $volume:/data \
+    -e HF_TOKEN=${HF_TOKEN} $ADD_ENVS\
+    -e CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES \
+    ghcr.io/huggingface/text-generation-inference:1.4 \
+    --model-id $model\
+     --num-shard $num_gpus 
+```
+
+### Deploy Llama3-13B model with multiple shards
+```shell
+## For two shards
+export HF_TOKEN=<HF_TOKEN>
+export model="meta-llama/Llama-2-13b-chat-hf"
+export CUDA_VISIBLE_DEVICES=0,1,2,3
 num_gpus=$(echo $CUDA_VISIBLE_DEVICES | tr ',' '\n' | wc -l)
 docker run --gpus all --shm-size 1g -p 8080:80 \
     -v $volume:/data \
