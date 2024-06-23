@@ -59,6 +59,19 @@ curl 127.0.0.1:8080/generate   \
 
 {"generated_text":"\n\nLLM stands for Master of Laws, which is a postgraduate academic degree, purs"}
 ```
+#### Deploying with helper scripts
+```shell
+export HF_TOKEN=<HF_TOKEN>
+model=meta-llama/Llama-2-7b-chat-hf
+cd llm-self-hosting/g5-scripts
+./run-g5-tgi-inference.sh ${model} <label>
+```
+```shell
+## To view logs
+./tail-logs-g5-tgi-inference.sh
+## To stop container
+./stop-g5-tgi-inference.sh
+```
 ### Deploy Llama-7B model with multiple shards
 ```shell
 ## For two shards
@@ -72,6 +85,21 @@ docker run --gpus all --shm-size 1g -p 8080:80 \
     ghcr.io/huggingface/text-generation-inference:1.4 \
     --model-id $model\
      --num-shard $num_gpus 
+```
+
+#### Deploying with helper scripts
+```shell
+export HF_TOKEN=<HF_TOKEN>
+model=meta-llama/Llama-2-7b-chat-hf
+export CUDA_VISIBLE_DEVICES=0,1
+cd llm-self-hosting/g5-scripts
+./run-g5-tgi-inference.sh ${model} <label>
+```
+```shell
+## To view logs
+./tail-logs-g5-tgi-inference.sh
+## To stop container
+./stop-g5-tgi-inference.sh
 ```
 
 ### Deploy Llama3-13B model with multiple shards
@@ -90,3 +118,17 @@ docker run --gpus all --shm-size 1g -p 8080:80 \
      --num-shard $num_gpus 
 ```
 
+#### Deploying with helper scripts
+```shell
+export HF_TOKEN=<HF_TOKEN>
+model="meta-llama/Llama-2-13b-chat-hf"
+export CUDA_VISIBLE_DEVICES=0,1,2,3
+cd llm-self-hosting/g5-scripts
+./run-g5-tgi-inference.sh ${model} <label>
+```
+```shell
+## To view logs
+./tail-logs-g5-tgi-inference.sh
+## To stop container
+./stop-g5-tgi-inference.sh
+```
