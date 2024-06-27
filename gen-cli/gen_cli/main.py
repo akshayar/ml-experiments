@@ -26,10 +26,10 @@ vector_store_path="./chroma_db"
 document_store_path="./document_store"
 
 if(os.path.isfile(document_store_path)):
-    print("file exists")
+    print("Document store exists")
     docstore = SimpleDocumentStore.from_persist_path(document_store_path)
 else:
-    print("file doesn't exists")
+    print("Document store doesn't exists")
     docstore = SimpleDocumentStore()
 
 # create client and a new collection
@@ -74,5 +74,5 @@ rag_cli_instance = RagCLI(
 
 if __name__ == "__main__":
     rag_cli_instance.cli()
-    print("Persisting")
+    print("Document store Persisting")
     docstore.persist(persist_path=document_store_path)
