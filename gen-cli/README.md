@@ -1,5 +1,6 @@
 # RAG Cli using LlamaIndex with Amazon Bedrock
 This project customizes [LlamaIndex RAG CLI](https://docs.llamaindex.ai/en/stable/getting_started/starter_tools/rag_cli/) for Amazon Bedrock. It uses [chroma](https://www.trychroma.com/) backed by local filesystem as the vector DB.
+## AWS Credentials setup
 The CLI uses credentials which are set using -
 ```shell
 export AWS_PROFILE=<profile>
@@ -12,6 +13,7 @@ export AWS_SECRET_ACCESS_KEY=<your_secret_access_key>
 # export AWS_SESSION_TOKEN=your_session_token
 
 ```
+## Customized embedding and query models
 The default version uses following parameters. Ensure that you have access to models defined below along with API access to call Amazon Bedrock API - 
 <li>Region - us-east-1 </li>
 <li>Embedding Model - amazon.titan-embed-image-v1 </li>
@@ -25,6 +27,24 @@ export EMBEDDING_MODEL=<model_id>
 export LLM=<model_id>
 ```
 ## Build and run
+### Python installation
+The implementation requires Python 3.11 or higher. Following are the installation instructions for Cloud9 on Amazon Linux.
+```shell
+### Python installation
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+cat << 'EOT' >> ~/.bashrc
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+EOT
+source ~/.bashrc
+sudo yum -y update
+sudo yum -y install bzip2-devel
+sudo yum -y install xz-devel
+
+## Install python
+pyenv install 3.10.10
+pyenv global 3.10.10
+```
 ### Poetry
 ```shell
 cd gen-cli
