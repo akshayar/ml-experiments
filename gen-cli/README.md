@@ -28,7 +28,7 @@ export LLM=<model_id>
 ```
 ## Build and run
 ### Python installation
-The implementation requires Python 3.11 or higher. Following are the installation instructions for Cloud9 on Amazon Linux.
+The implementation requires Python 3.10 or higher. Following are the installation instructions for Cloud9 on Amazon Linux.
 ```shell
 ### Python installation
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
@@ -46,8 +46,9 @@ pyenv install 3.10.10
 pyenv global 3.10.10
 ```
 ### Poetry
+Clone the repository and go to `ml-experiments/gen-cli`
 ```shell
-cd gen-cli
+cd ml-experiments/gen-cli
 poetry install
 ```
 ```shell
@@ -64,7 +65,7 @@ poetry install
 ```
 ### Without Poetry
 ```shell
-cd gen-cli
+cd ml-experiments/gen-cli
 pip install -r requirements.txt 
 ```
 ```shell
