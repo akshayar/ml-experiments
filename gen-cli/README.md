@@ -58,7 +58,7 @@ poetry install
 ```shell
 ### Ask questions from a file using REPL interface
 ./.venv/bin/python gen_cli/main.py rag -f <local-file-path> -c
-./.venv/bin/python gen_cli/main.py rag -f /Users/rawaaksh/Documents/Databricks-docs/The-Delta-Lake-Series-Lakehouse-012921.pdf -c
+./.venv/bin/python gen_cli/main.py rag -f /Users/<home>/Documents/Databricks-docs/The-Delta-Lake-Series-Lakehouse-012921.pdf -c
 ```
 ```shell
 
