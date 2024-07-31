@@ -19,21 +19,22 @@ import signal
 import sys
 import boto3
 
-def is_streaming_supported(modelId,region):
-    is_streaming_supported=False
-    client = boto3.client('bedrock' , region_name=region)
+
+def is_streaming_supported(modelId, region):
+    streaming_supported = False
+    client = boto3.client('bedrock', region_name=region)
     response = client.get_foundation_model(modelIdentifier=modelId)
     print(response)
     if "modelDetails" in response:
         if "responseStreamingSupported" in response["modelDetails"]:
-            is_streaming_supported = response["modelDetails"]["responseStreamingSupported"]
-    
-    if is_streaming_supported == True:
-        print("Streaming is supported in "+ llm_id)
+            streaming_supported = response["modelDetails"]["responseStreamingSupported"]
+
+    if streaming_supported:
+        print("Streaming is supported in " + llm_id)
     else:
         print("Streaming is no supported in " + llm_id)
 
-    return is_streaming_supported
+    return streaming_supported
 
 
 def get_env_or_default(env_name, default_value):
@@ -56,11 +57,11 @@ def shutdown_hook():
         document_store.persist(persist_path=document_store_path)
 
 
-def create_query_pipeline(llm, embedding_model, ingestion_pipeline, is_streaming_supported):
+def create_query_pipeline(ingestion_pipeline, is_streaming_supported):
     retriever = VectorStoreIndex.from_vector_store(
         ingestion_pipeline.vector_store
     ).as_retriever(similarity_top_k=8)
-    response_synthesizer = CompactAndRefine( 
+    response_synthesizer = CompactAndRefine(
         streaming=is_streaming_supported, verbose=True
     )
     print(response_synthesizer)
@@ -91,7 +92,7 @@ document_store = None
 region_name = get_env_or_default("AWS_REGION", "us-east-1")
 embedding_model_id = get_env_or_default("EMBEDDING_MODEL", "amazon.titan-embed-image-v1")
 llm_id = get_env_or_default("LLM", "anthropic.claude-3-sonnet-20240229-v1:0")
-is_streaming_supported = is_streaming_supported(llm_id,region_name)
+is_streaming_supported = is_streaming_supported(llm_id, region_name)
 
 print("Region {}, embedding model {}, query model {}".format(region_name, embedding_model_id, llm_id))
 
@@ -111,15 +112,14 @@ vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
 
 print("Document Store path {}, Chroma vector DB path {} ".format(document_store_path, vector_store_path))
 
-
 llm = Bedrock(
     model=llm_id, region_name=region_name
 )
 
 embedding_model = BedrockEmbedding(model_name=embedding_model_id, region_name=region_name)
 
-Settings.llm=llm
-Settings.embed_model=embedding_model
+Settings.llm = llm
+Settings.embed_model = embedding_model
 
 custom_ingestion_pipeline = IngestionPipeline(
     transformations=[
@@ -131,7 +131,7 @@ custom_ingestion_pipeline = IngestionPipeline(
     docstore=document_store,
     cache=IngestionCache(),
 )
-custom_query_pipeline = create_query_pipeline(llm, embedding_model,custom_ingestion_pipeline,is_streaming_supported)
+custom_query_pipeline = create_query_pipeline(custom_ingestion_pipeline, is_streaming_supported)
 
 # Setting up the custom QueryPipeline is optional!
 # You can still customize the vector store, LLM, and ingestion transformations without
@@ -150,8 +150,6 @@ rag_cli_instance = RagCLI(
     query_pipeline=custom_query_pipeline,  # optional
     # file_extractor=file_extractor,  # optional
 )
-
-
 
 if __name__ == "__main__":
     try:
