@@ -60,9 +60,7 @@ poetry install
 ./.venv/bin/python gen_cli/main.py rag -f <local-file-path> -c
 ./.venv/bin/python gen_cli/main.py rag -f /Users/<home>/Documents/Databricks-docs/The-Delta-Lake-Series-Lakehouse-012921.pdf -c
 ```
-```shell
 
-```
 ### Without Poetry
 ```shell
 cd ml-experiments/gen-cli
@@ -71,4 +69,9 @@ pip install -r requirements.txt
 ```shell
 ## Print helps
 python gen_cli/main.py rag -h
+```
+```shell
+### Ask questions from a file using REPL interface
+python gen_cli/main.py rag -f <local-file-path> -c
+python gen_cli/main.py rag -f /Users/<home>/Documents/Databricks-docs/The-Delta-Lake-Series-Lakehouse-012921.pdf -c
 ```
